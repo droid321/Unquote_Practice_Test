@@ -68,8 +68,37 @@ public class MainActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.btn_main_submit_answer);
 
         // TODO 4-E: set onClickListener for each answer Button
-
+        answer0Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAnswerSelected(0);
+            }
+        });
+        answer1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAnswerSelected(1);
+            }
+        });
+        answer2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAnswerSelected(2);
+            }
+        });
+        answer3Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAnswerSelected(3);
+            }
+        });
         // TODO 5-A: set onClickListener for the submit answer Button
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAnswerSubmission();
+            }
+        });
 
         startNewGame();
     }
@@ -95,9 +124,46 @@ public class MainActivity extends AppCompatActivity {
       }
 
     // TODO 4-A: onAnswerSelected(int answerSelected) {...}
+    void onAnswerSelected (int answerSelected){
+        Question currentQuestion = getCurrentQuestion();
+        currentQuestion.playerAnswer = answerSelected;
+        answer0Button.setText(currentQuestion.answer0);
+        answer1Button.setText(currentQuestion.answer1);
+        answer2Button.setText(currentQuestion.answer2);
+        answer3Button.setText(currentQuestion.answer3);
+        switch (answerSelected){
+            case 0:
+                answer0Button.setText("\"✔ \" "+ currentQuestion.answer0);
+                break;
+            case 1:
+                answer1Button.setText("\"✔ \" "+ currentQuestion.answer1);
+                break;
+            case 2:
+                answer2Button.setText("\"✔ \" "+ currentQuestion.answer2);
+                break;
+            case 3:
+                answer3Button.setText("\"✔ \" " + currentQuestion.answer3);
+                break;
+        }
+
+    }
 
     void onAnswerSubmission() {
         Question currentQuestion = getCurrentQuestion();
+        // Code to avoid user from submitting an empty answer!
+        if (currentQuestion.playerAnswer == -1){
+            AlertDialog.Builder noAnswerDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            noAnswerDialogBuilder.setCancelable(false);
+            noAnswerDialogBuilder.setTitle("Retry!");
+            noAnswerDialogBuilder.setMessage("Please Select an Answer!");
+            noAnswerDialogBuilder.setPositiveButton("Retry!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            noAnswerDialogBuilder.create().show();
+            return;
+        }
         if (currentQuestion.isCorrect()) {
             totalCorrect = totalCorrect + 1;
         }
@@ -108,9 +174,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (questions.size() == 0) {
             String gameOverMessage = getGameOverMessage(totalCorrect, totalQuestions);
-
             // TODO 5-D: Show a popup instead
-            System.out.println(gameOverMessage);
+            AlertDialog.Builder gameOverDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            gameOverDialogBuilder.setCancelable(false);
+            gameOverDialogBuilder.setTitle("Game Over!");
+            gameOverDialogBuilder.setMessage(gameOverMessage);
+            gameOverDialogBuilder.setPositiveButton("Play Again!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startNewGame();
+                }
+            });
+            gameOverDialogBuilder.create().show();
         } else {
             chooseNewQuestion();
 
