@@ -205,6 +205,13 @@ public class MainActivity extends AppCompatActivity {
         Question question3 = new Question(R.drawable.img_quote_3, "Insanely inspiring, insanely incorrect(maybe). Who is the true source of this inspiration?", "Nelson Mandela", "Harriet Tubman", "Mahatma Gandhi", "Nicholas Klein", 3);
         Question question4 = new Question(R.drawable.img_quote_4, "A peace worth striving for - who actually reminded us of this?", "Malala Yousafzai", "Martin Luther King Jr.", "Liu Xiaobo", "Dalai Lama", 1);
         Question question5 = new Question(R.drawable.img_quote_5, "Unfortunately, true - but did Marilyn Monroe convey it or did someone else?", "Laurel Thatcher Ulrich", "Marilyn Monroe", "Eleanor Roosevelt", "Queen Victoria", 0);
+        Question question6 = new Question(R.drawable.img_quote_6, "Here's the truth, Will Smith did say this, but in which movie?", "Independence Day", "Bad Boys", "Men in Black", "The Pursuit of Happiness", 2);
+        Question question7 = new Question(R.drawable.img_quote_7, "Which TV funny gal actually quipped this 1-liner?", "Ellen Degeneres", "Amy Poehler", "Betty White", "Tina Fey", 3);
+        Question question8 = new Question(R.drawable.img_quote_8, "This mayor won’t get my vote — but did he actually give this piece of advice? And if not, who did?", "Forrest Gump, Forrest Gump", "Dorry, Finding Nemo", "Esther Williams", "The Mayor, Jaws", 1);
+        Question question9 = new Question(R.drawable.img_quote_9, "Her heart will go on, but whose heart is it?", "Whiteny Houston", "Justin Beiber", "Celine Dion", "Mariah Carey", 0);
+        Question question10 = new Question(R.drawable.img_quote_10, "He’s the king of something alright — to whom does this self-titling line belong to?", "Simon Nguyen", "Joker, The Dark Knight", "Lex Luthor, Batman v Superman", "Jack, Titanic", 3);
+        Question question11 = new Question(R.drawable.img_quote_11, "Is “Grey” synonymous for “wise”? If so, maybe Gandalf did preach this advice. If not, who did?", "Yoda, Star Wars", "Zane", "Batman", "Uncle Ben, Spider Man", 0);
+        Question question12 = new Question(R.drawable.img_quote_12, "Houston, we have a problem with this quote — which space-traveler does this catch-phrase actually belong to?", "Han Solo, Star Wars", "Captain Kirk, Star Trek", "Buzz Lightyear, Toy Story", "Simon Nguyen", 2);
 
         questions.add(question0);
         questions.add(question1);
@@ -212,17 +219,28 @@ public class MainActivity extends AppCompatActivity {
         questions.add(question3);
         questions.add(question4);
         questions.add(question5);
-
+        questions.add(question6);
+        questions.add(question7);
+        questions.add(question8);
+        questions.add(question9);
+        questions.add(question10);
+        questions.add(question11);
+        questions.add(question12);
         totalCorrect = 0;
         totalQuestions = questions.size();
+        //Question firstQuestion = chooseNewQuestion();
 
-        Question firstQuestion = chooseNewQuestion();
-
+        while (totalQuestions > 6) {
+            Question firstQuestion = chooseNewQuestion();
+            displayQuestion(firstQuestion);
+            int questionIndexToRemove = generateRandomNumber(questions.size());
+            questions.remove(questionIndexToRemove);
+        }
         // TODO 3-D.ii: Uncomment the line below after implementing displayQuestionsRemaining(int)
         displayQuestionsRemaining(questions.size());
 
         // TODO 3-H.ii: Uncomment after implementing displayQuestion(Question)
-        displayQuestion(firstQuestion);
+        //displayQuestion(firstQuestion);
     }
 
     Question chooseNewQuestion() {
