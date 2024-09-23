@@ -228,13 +228,14 @@ public class MainActivity extends AppCompatActivity {
         questions.add(question12);
         totalCorrect = 0;
         totalQuestions = questions.size();
-        //Question firstQuestion = chooseNewQuestion();
 
+        // to remove 6 questions from the 13 question list and players pick between these
         while (totalQuestions > 6) {
             Question firstQuestion = chooseNewQuestion();
             displayQuestion(firstQuestion);
             int questionIndexToRemove = generateRandomNumber(questions.size());
             questions.remove(questionIndexToRemove);
+            totalQuestions = questions.size();
         }
         // TODO 3-D.ii: Uncomment the line below after implementing displayQuestionsRemaining(int)
         displayQuestionsRemaining(questions.size());
